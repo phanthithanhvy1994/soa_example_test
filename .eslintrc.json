@@ -1,0 +1,103 @@
+{
+  "extends": [
+    "next/core-web-vitals",
+    "next/typescript",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "rules": {
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-unused-expressions": "off",
+    "react-hooks/exhaustive-deps": "off",
+    "prettier/prettier": "error",
+    "no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_"
+      }
+    ],
+    "quotes": [
+      "error",
+      "single",
+      {
+        "avoidEscape": true
+      }
+    ],
+    "no-console": [
+      "error",
+      {
+        "allow": [
+          "error"
+        ]
+      }
+    ],
+    "prefer-arrow-callback": "error",
+    "prefer-const": "error",
+    "object-shorthand": "error",
+    "prefer-template": "error",
+    "object-curly-spacing": [
+      "error",
+      "always"
+    ],
+    "array-bracket-spacing": [
+      "error",
+      "never"
+    ],
+    "space-in-parens": [
+      "error",
+      "never"
+    ],
+    "comma-spacing": [
+      "error",
+      {
+        "before": false,
+        "after": true
+      }
+    ],
+    "keyword-spacing": [
+      "error",
+      {
+        "before": true,
+        "after": true
+      }
+    ],
+    "no-multiple-empty-lines": [
+      "error",
+      {
+        "max": 1,
+        "maxEOF": 0
+      }
+    ],
+    "semi": [
+      "error",
+      "never"
+    ],
+    "indent": [
+      "error",
+      2,
+      {
+        "SwitchCase": 1,
+        "VariableDeclarator": 1,
+        "outerIIFEBody": 1,
+        "MemberExpression": 1,
+        "FunctionDeclaration": {
+          "parameters": 1,
+          "body": 1
+        },
+        "FunctionExpression": {
+          "parameters": 1,
+          "body": 1
+        },
+        "CallExpression": {
+          "arguments": 1
+        },
+        "ArrayExpression": 1,
+        "ObjectExpression": 1,
+        "ImportDeclaration": 1,
+        "flatTernaryExpressions": false,
+        "ignoreComments": false
+      }
+    ]
+  }
+}
