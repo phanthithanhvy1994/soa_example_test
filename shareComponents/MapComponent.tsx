@@ -1,14 +1,14 @@
 import { Container } from '@/shareComponents'
 import TitleBlock from '@/shareComponents/TitleBlock'
 import CloseIcon from '@mui/icons-material/Close'
-import { Box, IconButton, Typography, Button } from '@mui/material'
+import { Box, Button, IconButton, Typography } from '@mui/material'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import { useEffect, useRef, useState } from 'react'
 import { ImageOverlay, MapContainer, Marker, Popup, useMap } from 'react-leaflet'
 
 const customIcon = L.icon({
-  iconUrl: '/images/mappin.png',
+  iconUrl: '/images/map_pin.png',
   iconSize: [40, 40],
   iconAnchor: [20, 40],
   popupAnchor: [0, -40]
