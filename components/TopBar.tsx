@@ -18,16 +18,11 @@ const Topbar = ({ onSidebarOpen, headersMapping }: Props): JSX.Element => {
   })
 
   return (
-    <Box 
-      display={'flex'} 
-      alignItems={'center'} 
-      width={1} 
-      px={2} 
-    >
-      <Box 
-        component='a' 
-        href='/' 
-        title='Page' 
+    <Box display={'flex'} alignItems={'center'} width={1} px={2}>
+      <Box
+        component='a'
+        href='/'
+        title='Page'
         sx={{ minWidth: 90, maxWidth: 180, display: 'flex', alignItems: 'center' }}
       >
         <img
@@ -45,12 +40,12 @@ const Topbar = ({ onSidebarOpen, headersMapping }: Props): JSX.Element => {
       </Box>
 
       <Box
-        sx={{ 
+        sx={{
           display: { xs: 'none', lg: 'flex' },
           alignItems: 'center',
           ml: 3,
           flexGrow: 1,
-          gap: 3 
+          gap: 3
         }}
       >
         {headersMapping.map((item, idx) => (

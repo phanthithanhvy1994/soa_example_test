@@ -1,11 +1,12 @@
+import Container from '@/components/Container'
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
-import { Box, Card, CardContent, CardMedia, IconButton, Typography, Link } from '@mui/material'
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
+import { Box, Card, CardContent, CardMedia, IconButton, Link, Typography } from '@mui/material'
+import useMediaQuery from '@mui/material/useMediaQuery'
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick-theme.css'
 import 'slick-carousel/slick/slick.css'
-import Container from '@/components/Container'
 
 const CustomPrevArrow = ({ onClick }: { onClick?: () => void }) => (
   <IconButton
@@ -55,18 +56,19 @@ interface Carousel {
 }
 
 const CarouselComponent = ({ title, more_info, cases }: CarouselComponentProps) => {
+  const isMobile = useMediaQuery('(max-width:600px)')
+
   const settings = {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 4,
+    slidesToShow: isMobile ? 2 : 4, // Hiển thị 2 item nhưng CSS sẽ tạo hiệu ứng 1.5
     slidesToScroll: 1,
-    nextArrow: <CustomNextArrow />,
-    prevArrow: <CustomPrevArrow />,
+    nextArrow: isMobile ? null : <CustomNextArrow />,
+    prevArrow: isMobile ? null : <CustomPrevArrow />,
     responsive: [
       { breakpoint: 1024, settings: { slidesToShow: 3 } },
-      { breakpoint: 768, settings: { slidesToShow: 2 } },
-      { breakpoint: 480, settings: { slidesToShow: 1 } }
+      { breakpoint: 768, settings: { slidesToShow: 2 } }
     ]
   }
 
@@ -81,104 +83,85 @@ const CarouselComponent = ({ title, more_info, cases }: CarouselComponentProps) 
         <Typography variant='h5' sx={{ fontWeight: 'bold', mb: 2 }}>
           {title}
         </Typography>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'flex-end', 
-            alignItems: 'center',
-            my: 1 
-          }}
-        >
-          <Link
-            href='#'
-            sx={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 0.5,
-              textDecoration: 'none',
-              borderBottom: '1px solid #888',
-              pb: '2px',
-              color: 'gray',
-              cursor: 'pointer',
-              '&:hover': { color: 'black', borderBottom: '1px solid black' }
-            }}
-          >
-            <Typography variant='body2'>{more_info}</Typography>
-            <ArrowForwardIcon fontSize='small' />
-          </Link>
-        </Box>
-        <Slider {...settings}>
-          {newCarousel.map((item, index) => (
-            <Box
-              key={index}
+
+        {!isMobile && (
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', my: 1 }}>
+            <Link
+              href='#'
               sx={{
-                border: 0,
-                px: 1
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 0.5,
+                textDecoration: 'none',
+                borderBottom: '1px solid #888',
+                pb: '2px',
+                color: 'gray',
+                cursor: 'pointer',
+                '&:hover': { color: 'black', borderBottom: '1px solid black' }
               }}
             >
-              <Card
-                sx={{
-                  maxWidth: 300,
-                  mx: 'auto',
-                  minHeight: 400, // ✅ Cố định chiều cao của Card
-                  display: 'flex',
-                  flexDirection: 'column'
-                }}
-              >
-                {/* Hình ảnh */}
-                <CardMedia
-                  component='img'
-                  height='200'
-                  image={item.image}
-                  alt={item.tagline}
-                  sx={{ objectFit: 'cover' }} // ✅ Đảm bảo hình ảnh giữ tỉ lệ
-                />
+              <Typography variant='body2'>{more_info}</Typography>
+              <ArrowForwardIcon fontSize='small' />
+            </Link>
+          </Box>
+        )}
 
-                <CardContent
+        <Box sx={{ overflow: 'hidden', position: 'relative' }}>
+          <Slider {...settings} className={isMobile ? 'mobile-slider' : ''}>
+            {newCarousel.map((item, index) => (
+              <Box key={index} sx={{ border: 0, px: 1 }}>
+                <Card
                   sx={{
-                    flex: 1, // ✅ Đảm bảo phần nội dung chiếm toàn bộ không gian còn lại
+                    maxWidth: 300,
+                    mx: 'auto',
+                    minHeight: 400,
                     display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between'
+                    flexDirection: 'column'
                   }}
                 >
-                  {/* Nhãn category */}
-                  <Typography variant='body2' sx={{ color: '#E86A33' }}>
-                    {item.category}
-                  </Typography>
-
-                  {/* Tiêu đề */}
-                  <Typography
-                    variant='h6'
+                  <CardMedia
+                    component='img'
+                    height='200'
+                    image={item.image}
+                    alt={item.tagline}
+                    sx={{ objectFit: 'cover' }}
+                  />
+                  <CardContent
                     sx={{
-                      fontWeight: 'bold',
-                      minHeight: 50, //
+                      flex: 1,
                       display: 'flex',
-                      alignItems: 'center'
+                      flexDirection: 'column',
+                      justifyContent: 'space-between'
                     }}
                   >
-                    {item.tagline}
-                  </Typography>
-
-                  {/* Mô tả */}
-                  <Typography
-                    variant='body2'
-                    sx={{
-                      mb: 1,
-                      borderLeft: '1px solid #BBBBBB',
-                      paddingLeft: '10px',
-                      minHeight: 60, // ✅
-                      display: 'flex',
-                      alignItems: 'center'
-                    }}
-                  >
-                    {item.description}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Box>
-          ))}
-        </Slider>
+                    <Typography variant='body2' sx={{ color: '#E86A33' }}>
+                      {item.category}
+                    </Typography>
+                    <Typography
+                      variant='h6'
+                      sx={{ fontWeight: 'bold', minHeight: 50, display: 'flex', alignItems: 'center' }}
+                    >
+                      {item.tagline}
+                    </Typography>
+                    <Typography
+                      variant='body2'
+                      sx={{
+                        mb: 1,
+                        borderLeft: '1px solid #BBBBBB',
+                        paddingLeft: '10px',
+                        minHeight: 60,
+                        display: 'flex',
+                        alignItems: 'center'
+                      }}
+                    >
+                      {item.description}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Box>
+            ))}
+          </Slider>
+        </Box>
       </Box>
     </Container>
   )

@@ -4,6 +4,7 @@ import Container from '@/components/Container'
 import CardItem from '@/shareComponents/CardItem'
 import ImageCard from '@/shareComponents/ImageCard'
 import { Box, Grid, Typography } from '@mui/material'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 interface TitleComponentItem {
   author: string
@@ -19,6 +20,7 @@ interface TitleComponentProps {
 }
 
 const TitleComponent = ({ title, text, reviews, footer }: TitleComponentProps) => {
+  const isMobile = useMediaQuery('(max-width:600px)')
   const newCardItem = reviews.map((item, index) => {
     return {
       ...item,
@@ -28,19 +30,26 @@ const TitleComponent = ({ title, text, reviews, footer }: TitleComponentProps) =
   return (
     <Container>
       <Box sx={{ textAlign: 'center', p: 3 }}>
-        <Grid container spacing={4} alignItems='stretch'>
-          <Grid item xs={12} md={6} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            <Typography variant='body1' sx={{ color: '#aaa' }}>
-              {text}
-            </Typography>
-          </Grid>
-
-          <Grid item xs={12} md={6} sx={{ display: 'flex', alignItems: 'center' }}>
-            <Typography variant='h2' sx={{ fontWeight: 'bold', mb: 3 }}>
+        <Grid container spacing={isMobile ? 2 : 4} alignItems='stretch' direction={isMobile ? 'rlt' : 'row'}>
+          <Grid
+            item
+            xs={12}
+            md={6}
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              order: isMobile ? 2 : 1
+            }}
+          >
+            <Typography variant='h2' sx={{ fontWeight: 'bold', mb: 2 }}>
               {title}{' '}
               <Typography component='span' sx={{ color: '#E86A33' }}>
-                {/* {hashtag} */}
+                #BASIC
               </Typography>
+            </Typography>
+            <Typography variant='body1' sx={{ color: '#aaa' }}>
+              {text}
             </Typography>
           </Grid>
         </Grid>
@@ -60,9 +69,7 @@ const TitleComponent = ({ title, text, reviews, footer }: TitleComponentProps) =
           ))}
         </Grid>
 
-        <Typography variant='body2'>
-            {footer}
-        </Typography>
+        <Typography variant='body2'>{footer}</Typography>
       </Box>
     </Container>
   )

@@ -41,7 +41,7 @@ const FullScreenHeroWithImageSlider = ({ src, priority, alt, bgColor }: FullScre
           display: 'flex',
           gap: 3,
           background: 'rgba(0, 0, 0, 0.5)',
-          padding: '8px 16px',
+          padding: '0 16px',
           borderRadius: '8px'
         }}
       >

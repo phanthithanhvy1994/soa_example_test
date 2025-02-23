@@ -2,6 +2,7 @@ import { Container } from '@/shareComponents'
 import TitleBlock from '@/shareComponents/TitleBlock'
 import AttachFileIcon from '@mui/icons-material/AttachFile'
 import { Box, Button, Grid, IconButton, TextField, Typography } from '@mui/material'
+import useMediaQuery from '@mui/material/useMediaQuery'
 import { useState } from 'react'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
@@ -18,8 +19,7 @@ interface MultiDatePickerProps {
 
 const MultiDatePicker = ({ title, btn_1, btn_2, btn_3, btn_4, btn_5, btn_6 }: MultiDatePickerProps) => {
   const [selectedDates, setSelectedDates] = useState<Date[]>([])
-
-  // Danh sách các ngày bận (disable)
+  const isMobile = useMediaQuery('(max-width:600px)')
   const busyDates = [
     '2025-02-04',
     '2025-02-01',
@@ -30,7 +30,6 @@ const MultiDatePicker = ({ title, btn_1, btn_2, btn_3, btn_4, btn_5, btn_6 }: Mu
     '2025-02-17'
   ].map(date => new Date(date))
 
-  // Hàm xử lý chọn ngày (toggle chọn/bỏ chọn ngày)
   const handleDateChange = (date: Date | null) => {
     if (!date) return
 
@@ -69,8 +68,10 @@ const MultiDatePicker = ({ title, btn_1, btn_2, btn_3, btn_4, btn_5, btn_6 }: Mu
               return (
                 <div className='date-cell'>
                   <span>{day}</span>
-                  {isBusy && <div className='date-label busy-label'>Busy</div>}
-                  {!isBusy && isCurrentMonth && <div className='date-label available-label'>Available</div>}
+                  {isBusy && !isMobile && <div className='date-label busy-label'>Busy</div>}
+                  {!isBusy && !isMobile && isCurrentMonth && (
+                    <div className='date-label available-label'>Available</div>
+                  )}
                 </div>
               )
             }}
@@ -121,12 +122,18 @@ const MultiDatePicker = ({ title, btn_1, btn_2, btn_3, btn_4, btn_5, btn_6 }: Mu
 
         {/* Buttons */}
         <Box display='flex' justifyContent='flex-end' mt={2} gap={1}>
-          <Button variant='outlined' color='secondary'>
-            {btn_5}
-          </Button>
-          <Button variant='contained' color='primary' endIcon={<span>↗</span>}>
-            {btn_6}
-          </Button>
+          <Grid container spacing={1} width={isMobile ? '100%' : 'auto'}>
+            <Grid item xs={6} sm='auto' display='flex'>
+              <Button fullWidth={isMobile} variant='outlined' color='secondary'>
+                {btn_5}
+              </Button>
+            </Grid>
+            <Grid item xs={6} sm='auto' display='flex'>
+              <Button fullWidth={isMobile} variant='contained' color='primary' endIcon={<span>↗</span>}>
+                {btn_6}
+              </Button>
+            </Grid>
+          </Grid>
         </Box>
       </div>
     </Container>

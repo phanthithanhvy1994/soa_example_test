@@ -9,7 +9,7 @@ interface ImageCardProps {
   date: string
 }
 
-const CarItem: React.FC<ImageCardProps> = ({ author, date , imageUrl}) => {
+const CarItem: React.FC<ImageCardProps> = ({ author, date, imageUrl }) => {
   return (
     <Card sx={{ borderRadius: 3, overflow: 'hidden', boxShadow: 3 }}>
       <CardActionArea>
@@ -36,13 +36,7 @@ const CarItem: React.FC<ImageCardProps> = ({ author, date , imageUrl}) => {
         >
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <Instagram fontSize='small' />
-            <Typography variant='body2' fontWeight='bold'>
-              {author}
-            </Typography>
-
-            <Typography variant='body1' fontWeight='bold'>
-              {date}
-            </Typography>
+            <Typography variant='body2'>{author}</Typography>
           </Box>
           <ArrowOutward fontSize='small' />
         </CardContent>
