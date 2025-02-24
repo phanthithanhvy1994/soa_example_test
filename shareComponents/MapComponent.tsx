@@ -1,3 +1,5 @@
+'use client'
+
 import { Container } from '@/shareComponents'
 import TitleBlock from '@/shareComponents/TitleBlock'
 import CloseIcon from '@mui/icons-material/Close'
@@ -7,6 +9,7 @@ import 'leaflet/dist/leaflet.css'
 import { useEffect, useRef, useState } from 'react'
 import { ImageOverlay, MapContainer, Marker, Popup, useMap } from 'react-leaflet'
 
+// 🧷 Custom Icon
 const customIcon = L.icon({
   iconUrl: '/images/map_pin.png',
   iconSize: [40, 40],
@@ -14,6 +17,7 @@ const customIcon = L.icon({
   popupAnchor: [0, -40]
 })
 
+// 🔄 Reset Button Component
 const ResetButton = () => {
   const map = useMap()
   const handleReset = () =>
@@ -28,6 +32,7 @@ const ResetButton = () => {
   )
 }
 
+// 🗺️ Interface
 interface Location {
   name: string
   website?: string
@@ -50,14 +55,16 @@ interface MapProps {
   carte_point: Location[]
 }
 
+// 📍 Main Component
 const ResponsiveUI = ({ title, cases, carte_point }: MapProps) => {
   const [activeLocation, setActiveLocation] = useState<Location | null>(null)
-  const mapRef = useRef(null)
-  const containerRef = useRef(null)
+  const mapRef = useRef<L.Map | null>(null)
+  const containerRef = useRef<HTMLDivElement | null>(null)
   const [height, setHeight] = useState<number | null>(null)
   const [width, setWidth] = useState<number | null>(null)
   const [containerWidth, setContainerWidth] = useState<number | null>(null)
 
+  // 🖼️ Load image size
   useEffect(() => {
     const img = new Image()
     img.src = '/images/map.png'
@@ -67,6 +74,7 @@ const ResponsiveUI = ({ title, cases, carte_point }: MapProps) => {
     }
   }, [])
 
+  // 🧩 Responsive map width
   useEffect(() => {
     if (containerRef.current) {
       const resizeObserver = new ResizeObserver(entries => {
@@ -80,6 +88,17 @@ const ResponsiveUI = ({ title, cases, carte_point }: MapProps) => {
   }, [])
 
   const computedWidth = width && containerWidth ? Math.min(width, containerWidth) : '100%'
+  console.log('carte_point', carte_point)
+  // 📍 Handle click button to focus marker
+  const handleButtonClick = (activity: string) => {
+    const location = carte_point.filter(point => point.coordinates).find(point => point.activities.includes(activity))
+    if (location && location.coordinates && mapRef.current) {
+      setActiveLocation(location)
+      const lat = parseFloat(location.coordinates.latitude)
+      const lng = parseFloat(location.coordinates.longitude)
+      mapRef.current.setView([lat, lng], 3)
+    }
+  }
 
   return (
     <Box bgcolor={'alternate.main'}>
@@ -96,6 +115,7 @@ const ResponsiveUI = ({ title, cases, carte_point }: MapProps) => {
                 color: '#542E1B',
                 '&:hover': { borderColor: '#A65F50', backgroundColor: '#FAF3F0' }
               }}
+              onClick={() => handleButtonClick(activity)}
             >
               {activity}
             </Button>
