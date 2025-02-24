@@ -44,6 +44,19 @@ const Footer = ({ address, links }: FooterProps) => {
               })}
             </ul>
           </Grid>
+          {isMobile && (
+            <Grid container justifyContent='center'>
+              <IconButton sx={{ color: 'white' }}>
+                <Facebook />
+              </IconButton>
+              <IconButton sx={{ color: 'white' }}>
+                <Instagram />
+              </IconButton>
+              <IconButton sx={{ color: 'white' }}>
+                <YouTube />
+              </IconButton>
+            </Grid>
+          )}
         </Grid>
 
         <Box mt={4} textAlign={isMobile ? 'center' : 'left'}>
