@@ -169,6 +169,9 @@ s .react-datepicker__day--selected,
   border: 1px solid #e0e0e0 !important
 }
 
+.react-datepicker__day--outside-month .available-label{
+  display: none;
+}
 
 #carousel-image-start,
 #carousel-image-end {

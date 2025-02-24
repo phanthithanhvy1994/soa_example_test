@@ -27,7 +27,8 @@ const MultiDatePicker = ({ title, btn_1, btn_2, btn_3, btn_4, btn_5, btn_6 }: Mu
     '2025-02-15',
     '2025-03-15',
     '2025-02-09',
-    '2025-02-17'
+    '2025-02-17',
+    '2025-03-17'
   ].map(date => new Date(date))
 
   const handleDateChange = (date: Date | null) => {
@@ -64,14 +65,11 @@ const MultiDatePicker = ({ title, btn_1, btn_2, btn_3, btn_4, btn_5, btn_6 }: Mu
             }
             renderDayContents={(day, date) => {
               const isBusy = busyDates.some(d => d.toDateString() === date.toDateString())
-              const isCurrentMonth = new Date().getMonth() === date.getMonth()
               return (
                 <div className='date-cell'>
                   <span>{day}</span>
                   {isBusy && !isMobile && <div className='date-label busy-label'>Busy</div>}
-                  {!isBusy && !isMobile && isCurrentMonth && (
-                    <div className='date-label available-label'>Available</div>
-                  )}
+                  {!isBusy && !isMobile && <div className='date-label available-label'>Available</div>}
                 </div>
               )
             }}
