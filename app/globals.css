@@ -80,8 +80,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
   border-radius: 6px;
   border: 1px solid transparent;
   font-size: 14px;
@@ -92,7 +90,6 @@
 .custom-datepicker .react-datepicker {
   width: 100%;
   max-width: 600px;
-  /* Giới hạn chiều rộng */
   font-family: Arial, sans-serif;
   padding: 10px;
 }
@@ -114,8 +111,16 @@
   padding: 5px;
   margin: 2px;
   cursor: pointer;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   background-color: #FFF4F1;
+}
+
+@media (max-width:600px) {
+  .custom-datepicker .react-datepicker__day {
+    width: 40px;
+    height: 40px;
+  }
 }
 
 .custom-datepicker .react-datepicker__day .available-label{

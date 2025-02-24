@@ -15,10 +15,25 @@ const CarItem: React.FC<ImageCardProps> = ({ author, date, imageUrl }) => {
       <CardActionArea>
         <Box
           sx={{
-            position: 'relative'
+            width: '100%', // Chiếm toàn bộ chiều rộng
+            height: 0, // Chiều cao tự động
+            paddingTop: '100%', // Giữ tỷ lệ 16:9
+            position: 'relative',
+            overflow: 'hidden'
           }}
         >
-          <img src={imageUrl} alt={author} />
+          <img
+            src={imageUrl}
+            alt={author}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover'
+            }}
+          />
         </Box>
         <CardContent
           sx={{
